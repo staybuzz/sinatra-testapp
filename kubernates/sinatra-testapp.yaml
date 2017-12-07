@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sinatra-testapp
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: testapp
+    spec:
+      containers:
+        - name: sinatra-testapp
+          image: staybuzzy/sinatra-testapp
+          ports:
+            - containerPort: 4567
