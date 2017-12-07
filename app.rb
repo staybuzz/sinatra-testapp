@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'sinatra/reloader'
 
+set :environment, :production
+
 get '/' do
   'hello'
 end
