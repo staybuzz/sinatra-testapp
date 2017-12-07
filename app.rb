@@ -1,10 +1,11 @@
 require 'sinatra'
 require 'sinatra/reloader'
+require 'socket'
 
 set :environment, :production
 
 get '/' do
-  'hello'
+  "hello #{Socket.gethostname}"
 end
 
 get '/*' do |name|
