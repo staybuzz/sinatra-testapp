@@ -1,0 +1,15 @@
+!!!
+%html
+  %head
+    %title testblog
+  %body
+    #form
+      %form{:action=>"/blog", :method=>"post"}
+        %input{:type=>"texfield", :name=>"name"}
+        %input{:type=>"texfield", :name=>"msg"}
+        %input{:type=>"submit", :value=>"send"}
+
+    #item
+      - @comments.each do |comment|
+        #{comment.name} : #{comment.formatted_message} (#{comment.date})
+        %hr
