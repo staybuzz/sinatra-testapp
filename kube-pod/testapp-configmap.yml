@@ -21,6 +21,12 @@ data:
         sendfile        on;
         keepalive_timeout  65;
 
+        # log_format main '$http_x_forwarded_for - [$time_local] "$request" $status ' 
+        #                 '"http_x_forwarded_proto: $http_x_forwarded_proto" '
+        #                 '"http_cloudfront_forwarded_proto: $http_cloudfront_forwarded_proto" '
+        #                 '"scheme: $scheme" '
+        #                 '"Host: $host"'
+
         upstream webapp {
             server 127.0.0.1:4567;
         }
@@ -29,7 +35,7 @@ data:
             listen 80;
 
             location / {
-                if ($http_x_forwarded_proto != "https") {
+                if ($http_cloudfront_forwarded_proto != "https") {
                   rewrite ^ https://$host$request_uri? permanent;
                 }
                 proxy_redirect     off;
