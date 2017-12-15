@@ -35,9 +35,17 @@ data:
             listen 80;
 
             location / {
-                if ($http_cloudfront_forwarded_proto != "https") {
+                set $force_ssl 1;
+                if ($http_cloudfront_forwarded_proto = "https") {
+                  set $force_ssl 0;
+                }
+                if ($http_x_forwarded_proto = "https") {
+                  set $force_ssl 0;
+                }
+                if ($force_ssl) {
                   rewrite ^ https://$host$request_uri? permanent;
                 }
+
                 proxy_redirect     off;
                 proxy_set_header   Host $host;
                 proxy_pass         http://webapp;
