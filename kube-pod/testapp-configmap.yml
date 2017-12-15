@@ -29,8 +29,12 @@ data:
             listen 80;
 
             location / {
-                proxy_pass         http://webapp;
+                if ($http_x_forwarded_proto != "https") {
+                  rewrite ^ https://$host$request_uri? permanent;
+                }
                 proxy_redirect     off;
+                proxy_set_header   Host $host;
+                proxy_pass         http://webapp;
             }
         }
     }
