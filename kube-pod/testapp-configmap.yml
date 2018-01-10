@@ -21,11 +21,11 @@ data:
         sendfile        on;
         keepalive_timeout  65;
 
-        # log_format main '$http_x_forwarded_for - [$time_local] "$request" $status ' 
-        #                 '"http_x_forwarded_proto: $http_x_forwarded_proto" '
-        #                 '"http_cloudfront_forwarded_proto: $http_cloudfront_forwarded_proto" '
-        #                 '"scheme: $scheme" '
-        #                 '"Host: $host"'
+        log_format main '$http_x_forwarded_for - [$time_local] "$request" $status ' 
+                        '"http_x_forwarded_proto: $http_x_forwarded_proto" '
+                        '"http_cloudfront_forwarded_proto: $http_cloudfront_forwarded_proto" '
+                        '"scheme: $scheme" '
+                        '"Host: $host"';
 
         upstream webapp {
             server 127.0.0.1:4567;

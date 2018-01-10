@@ -28,6 +28,18 @@ get '/' do
   "hello #{Socket.gethostname}"
 end
 
+get '/req' do
+  http_headers = request.env.select do |key, val|
+    key.start_with?("HTTP_")
+  end
+  headers = http_headers.inject({}) do |a, (k, v)|
+    a[k.sub(/^HTTP_/, "").downcase.gsub(/(^|_)\w/) { |word| word.upcase }.gsub("_", "-") ] = v
+    a
+  end
+  headers.to_a.map { |v| v.join(": ") }.join("\n<br>")
+end
+
+
 
 get '/blog' do
   @comments = Comments.order_by(:posted_date)
